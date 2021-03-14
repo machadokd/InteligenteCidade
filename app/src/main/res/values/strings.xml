@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">InteligenteCidade</string>
+    <string name="empty_not_saved">Não foi guardado</string>
+    <string name="saved">Guardado com sucesso!</string>
 </resources>
