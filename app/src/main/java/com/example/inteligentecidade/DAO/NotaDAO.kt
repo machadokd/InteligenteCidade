@@ -12,8 +12,6 @@ interface NotaDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(nota: Nota)
 
-
-
     @Query("DELETE FROM tabela_notas")
     suspend fun deleteAll()
 
