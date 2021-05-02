@@ -47,7 +47,6 @@ class MainActivity : AppCompatActivity() {
 
                     intent.putExtra("id_user", response.body()?.id_user)
                     intent.putExtra("username", response.body()?.username)
-                    intent.putExtra("password", response.body()?.password)
 
                     startActivity(intent)
 
@@ -56,7 +55,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call:Call<OutputPostUser>, t: Throwable) {
-                Toast.makeText(this@MainActivity, "ERROO", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivity, "ERRO", Toast.LENGTH_SHORT).show()
             }
         })
     }

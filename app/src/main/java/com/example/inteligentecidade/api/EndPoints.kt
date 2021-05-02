@@ -7,4 +7,6 @@ interface EndPoints {
 
     @POST("api/login")
     fun login(@Body user: User): Call<OutputPostUser>
+
+
 }

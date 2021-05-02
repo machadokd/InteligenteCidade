@@ -6,10 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".AddNota">
 
-    <com.google.android.material.textfield.TextInputEditText
+    <EditText
         android:id="@+id/tituloNovaNota"
-        android:layout_width="346dp"
-        android:layout_height="46dp"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="28dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -17,14 +17,14 @@
 
     <EditText
         android:id="@+id/descricaoNovaNota"
-        android:layout_width="340dp"
-        android:layout_height="182dp"
-        android:layout_marginStart="36dp"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/custom_button"
         android:hint="Descricao"
+        android:inputType="textMultiLine"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tituloNovaNota"/>
+        app:layout_constraintTop_toBottomOf="@+id/tituloNovaNota" />
 
     <Button
         android:id="@+id/guardarNovaNota"
@@ -36,5 +36,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/descricaoNovaNota"
         android:text="Guardar"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
