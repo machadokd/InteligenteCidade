@@ -8,25 +8,27 @@ import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.os.FileUtils
 import android.provider.MediaStore
+import android.util.Base64
 import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
-import com.google.android.gms.maps.model.LatLng
-import it.sauronsoftware.ftp4j.FTPClient
-import java.io.File
-import java.io.IOException
-import java.text.SimpleDateFormat
-import java.util.*
+import androidx.core.graphics.drawable.toBitmap
+import com.example.inteligentecidade.api.*
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.io.*
 
 
 class ReportActivity : AppCompatActivity() {
@@ -36,6 +38,7 @@ class ReportActivity : AppCompatActivity() {
 
     lateinit var username : String
     lateinit var id_user : String
+
 
     var lat : String? = null
     var long: String? = null
@@ -63,6 +66,7 @@ class ReportActivity : AppCompatActivity() {
         var textlong = findViewById<TextView>(R.id.textViewLong)
         var moradaEditText = findViewById<EditText>(R.id.morada_report)
 
+
         textlat.setText(lat)
         textlong.setText(long)
         moradaEditText.setText(morada)
@@ -72,8 +76,17 @@ class ReportActivity : AppCompatActivity() {
         captureButton.setOnClickListener(View.OnClickListener {
             if (checkPersmission()) takePicture() else requestPermission()
         })
+
+        val botaoReport = findViewById<Button>(R.id.reportar2)
+        botaoReport.setOnClickListener {
+            report()
+        }
     }
 
+    override fun onResume() {
+        super.onResume()
+
+    }
 
     @SuppressLint("MissingSuperCall")
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -119,4 +132,79 @@ class ReportActivity : AppCompatActivity() {
         ActivityCompat.requestPermissions(this, arrayOf(READ_EXTERNAL_STORAGE, CAMERA), PERMISSION_REQUEST_CODE)
     }
 
+    /*private fun report() {
+        val imgBitmap: Bitmap = findViewById<ImageView>(R.id.imageViewContent).drawable.toBitmap()
+        val imageFile: File = convertBitmapToFile("file", imgBitmap)
+        Log.d("IMAGEM", imageFile.toString());
+        //val imgFileRequest: RequestBody = RequestBody.create(MediaType.parse("image/*"), imageFile)
+        //val foto: MultipartBody.Part = MultipartBody.Part.createFormData("foto", imageFile.name, imgFileRequest)
+    }*/
+
+     */
+
+    private fun convertBitmapToFile(fileName: String, bitmap: Bitmap): File {
+            //create a file to write bitmap data
+            val file = File(this@ReportActivity.cacheDir, fileName)
+            file.createNewFile()
+
+            //Convert bitmap to byte array
+            val bos = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 50, bos)
+            val bitMapData = bos.toByteArray()
+
+            //write the bytes in file
+            var fos: FileOutputStream? = null
+            try {
+                fos = FileOutputStream(file)
+            } catch (e: FileNotFoundException) {
+                e.printStackTrace()
+            }
+            try {
+                fos?.write(bitMapData)
+                fos?.flush()
+                fos?.close()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        return file
+    }
+
+    private fun report(){
+        var titulo = findViewById<EditText>(R.id.tituloReport)
+        var descricao = findViewById<EditText>(R.id.descricaoReport)
+        if(!titulo.text.isEmpty()&&!descricao.text.isEmpty()){
+            val imgBitmap: Bitmap = findViewById<ImageView>(R.id.imageViewContent).drawable.toBitmap()
+            val imageFile: File = convertBitmapToFile("file", imgBitmap)
+
+
+            val imgFileRequest: RequestBody = RequestBody.create(MediaType.parse("image/*"), imageFile)
+            val foto: MultipartBody.Part = MultipartBody.Part.createFormData("file", imageFile.name, imgFileRequest)
+
+            val iduser: RequestBody = RequestBody.create(MediaType.parse("text/plain"), id_user)
+            val titulo: RequestBody = RequestBody.create(MediaType.parse("text/plain"), titulo.text.toString())
+            val descricao: RequestBody = RequestBody.create(MediaType.parse("text/plain"), descricao.text.toString())
+            val latitude: RequestBody = RequestBody.create(MediaType.parse("text/plain"), lat)
+            val longitude: RequestBody = RequestBody.create(MediaType.parse("text/plain"), long)
+
+            val request = ServiceBuilder.buildService(EndPoints::class.java)
+
+            val call = request.report(foto, iduser, titulo, descricao, latitude, longitude)
+
+            call.enqueue(object : Callback<OutputPostReport> {
+
+                override fun onResponse(call: Call<OutputPostReport>, response: Response<OutputPostReport>) {
+                    if (response.isSuccessful){
+                        Toast.makeText(this@ReportActivity, "Report Efetuado com sucesso.", Toast.LENGTH_SHORT).show()
+                        finish()
+                    }
+                }
+
+                override fun onFailure(call: Call<OutputPostReport>, t: Throwable) {
+                    Toast.makeText(this@ReportActivity, "Erro", Toast.LENGTH_SHORT).show()
+                }
+            })
+        }else{
+            Toast.makeText(this@ReportActivity, "Não é possível ter campos vazios.", Toast.LENGTH_SHORT).show()
+        }
+    }
 }

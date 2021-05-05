@@ -87,26 +87,27 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
 
     override fun onMarkerClick(p0: Marker?) = false
 
+    private fun getAddress(lat :Double, long: Double):String?{
+        val geocoder = Geocoder(this)
+        val list = geocoder.getFromLocation(lat, long, 1)
+        return list[0].getAddressLine(0)
+    }
+
     private fun setMapLongClick(map: GoogleMap) {
         map.setOnMapLongClickListener { latLng ->
             map.addMarker(
                     MarkerOptions()
                             .position(latLng)
-
             )
             val intent = Intent(this@MapActivity, ReportActivity::class.java)
             intent.putExtra("id_user2", id_user)
             intent.putExtra("username2", username)
             intent.putExtra("lat", latLng.latitude.toString())
             intent.putExtra("long", latLng.longitude.toString())
-            intent.putExtra("morada", getAddress(latLng.latitude, latLng.longitude))
+            val address = getAddress(latLng.latitude, latLng.longitude)
+            intent.putExtra("morada", address)
             startActivity(intent)
         }
     }
 
-    private fun getAddress(lat :Double, long: Double):String?{
-        val geocoder = Geocoder(this)
-        val list = geocoder.getFromLocation(lat, long, 1)
-        return list[0].getAddressLine(0)
-    }
 }
