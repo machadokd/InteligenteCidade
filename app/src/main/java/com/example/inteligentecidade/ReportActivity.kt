@@ -24,6 +24,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import com.example.inteligentecidade.api.*
+import com.google.android.gms.maps.model.Marker
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody

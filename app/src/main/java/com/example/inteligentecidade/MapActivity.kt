@@ -14,6 +14,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.CheckBox
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.inteligentecidade.api.EndPoints
@@ -44,6 +45,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
     lateinit var password : String
     lateinit var id_user : String
     private lateinit var sharedPreferences: SharedPreferences
+    lateinit var myMarkers: MutableList<Marker>
+    lateinit var otherMarkers : MutableList<Marker>
 
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
@@ -52,6 +55,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
+        myMarkers = mutableListOf<Marker>()
+        otherMarkers = mutableListOf<Marker>()
 
         id_user = intent.getStringExtra("id_user").toString()
         username = intent.getStringExtra("username").toString()
@@ -94,7 +99,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
                 }
                 true
             }
-
             else -> super.onOptionsItemSelected(item)
         }
 
@@ -111,13 +115,22 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
      */
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
-
         map.uiSettings.isZoomControlsEnabled = true
         map.setOnMarkerClickListener(this)
+
+        map.setOnInfoWindowClickListener { marker ->
+            onMarkerClick(marker)
+            myMarkers.forEach{
+                if (marker.id == it.id){
+
+                }
+            }
+        }
 
         setUpMap()
         setMapLongClick(map)
     }
+
 
     private fun setUpMap() {
         if (ActivityCompat.checkSelfPermission(this,
@@ -127,8 +140,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
             return
         }
         map.isMyLocationEnabled = true
-
-// 2
         fusedLocationClient.lastLocation.addOnSuccessListener(this) { location ->
             // Got last known location. In some rare situations this can be null.
             // 3
@@ -141,6 +152,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
     }
 
     override fun onMarkerClick(p0: Marker?) = false
+
 
     private fun getAddress(lat :Double, long: Double):String?{
         val geocoder = Geocoder(this)
@@ -175,10 +187,12 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
                     var reports = response.body();
                     sharedPreferences = getSharedPreferences(getString(R.string.preference_key), Context.MODE_PRIVATE)
                     val id_user = sharedPreferences.getString(getString(R.string.id_user), "0")
+                    map.clear()
                     reports?.forEach {
                         if(it.id_user==id_user){
                             val posicao = LatLng(it.latitude.toDouble(), it.longitude.toDouble())
-                            map.addMarker(
+                            var marker : Marker
+                            marker = map.addMarker(
                                     MarkerOptions()
                                             .position(posicao)
                                             .title(it.titulo)
@@ -187,9 +201,11 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
                                                     BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
                                             )
                             )
+                            myMarkers.add(marker)
                         }else{
                             val posicao = LatLng(it.latitude.toDouble(), it.longitude.toDouble())
-                            map.addMarker(
+                            var marker : Marker
+                            marker = map.addMarker(
                                     MarkerOptions()
                                             .position(posicao)
                                             .title(it.titulo)
@@ -198,6 +214,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
                                                     BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)
                                             )
                             )
+                            otherMarkers.add(marker)
                         }
                     }
                 }
