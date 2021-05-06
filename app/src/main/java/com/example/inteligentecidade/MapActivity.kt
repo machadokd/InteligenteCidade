@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.Location
+import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -25,9 +26,11 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -40,6 +43,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
     lateinit var username : String
     lateinit var password : String
     lateinit var id_user : String
+    private lateinit var sharedPreferences: SharedPreferences
 
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
@@ -57,6 +61,11 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+        val fab = findViewById<FloatingActionButton>(R.id.fabMap)
+        fab.setOnClickListener {
+            abreReportFab(lastLocation)
+        }
     }
 
     override fun onResume() {
@@ -76,10 +85,9 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
             R.id.logout -> {
                 val sharedPref : SharedPreferences = getSharedPreferences(getString(R.string.preference_key), Context.MODE_PRIVATE)
                 with(sharedPref.edit()){
-                    putBoolean(getString(R.string.check_login), false)
-                    putString(getString(R.string.user), null)
-                    putString(getString(R.string.pass), null)
+                    clear()
                     commit()
+                    apply()
                     val intent = Intent(this@MapActivity, MainActivity::class.java)
                     startActivity(intent)
                     finishAffinity()
@@ -165,15 +173,32 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
             override fun onResponse(call: Call<List<Report>>, response: Response<List<Report>>) {
                 if (response.isSuccessful){
                     var reports = response.body();
-
+                    sharedPreferences = getSharedPreferences(getString(R.string.preference_key), Context.MODE_PRIVATE)
+                    val id_user = sharedPreferences.getString(getString(R.string.id_user), "0")
                     reports?.forEach {
-                        val posicao = LatLng(it.latitude.toDouble(), it.longitude.toDouble())
-                        map.addMarker(
-                                MarkerOptions()
-                                        .position(posicao)
-                                        .title(it.titulo)
-                                        .snippet(it.tipo)
-                        )
+                        if(it.id_user==id_user){
+                            val posicao = LatLng(it.latitude.toDouble(), it.longitude.toDouble())
+                            map.addMarker(
+                                    MarkerOptions()
+                                            .position(posicao)
+                                            .title(it.titulo)
+                                            .snippet(it.tipo)
+                                            .icon(
+                                                    BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
+                                            )
+                            )
+                        }else{
+                            val posicao = LatLng(it.latitude.toDouble(), it.longitude.toDouble())
+                            map.addMarker(
+                                    MarkerOptions()
+                                            .position(posicao)
+                                            .title(it.titulo)
+                                            .snippet(it.tipo)
+                                            .icon(
+                                                    BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)
+                                            )
+                            )
+                        }
                     }
                 }
             }
@@ -182,6 +207,15 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
                 Log.d("REPORTS" , "NAO CARREGADOS")
             }
         })
+    }
+
+    private fun abreReportFab(lastLocation: Location){
+        val intent = Intent(this@MapActivity, ReportActivity::class.java)
+        intent.putExtra("lat", lastLocation.latitude.toString())
+        intent.putExtra("long", lastLocation.longitude.toString())
+        val address = getAddress(lastLocation.latitude, lastLocation.longitude)
+        intent.putExtra("morada", address)
+        startActivity(intent)
     }
 
 }
