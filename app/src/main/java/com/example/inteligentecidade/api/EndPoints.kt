@@ -11,7 +11,7 @@ interface EndPoints {
     fun login(@Body user: User): Call<OutputPostUser>
 
     @Multipart
-    @POST("api/report")
+    @POST("api/insere_report")
     fun report(
             @Part file: MultipartBody.Part,
             @Part("id_user") id_user: RequestBody,
@@ -19,5 +19,9 @@ interface EndPoints {
             @Part("descricao") descricao: RequestBody,
             @Part("latitude") latitude: RequestBody,
             @Part("longitude") longitude: RequestBody,
+            @Part("tipo") tipo: RequestBody
     ) : Call<OutputPostReport>
+
+    @GET("api/reports")
+    fun getReports(): Call<List<Report>>
 }

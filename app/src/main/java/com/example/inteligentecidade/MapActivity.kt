@@ -8,6 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.core.app.ActivityCompat
+import com.example.inteligentecidade.api.EndPoints
+import com.example.inteligentecidade.api.Report
+import com.example.inteligentecidade.api.ServiceBuilder
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -17,6 +20,9 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener{
 
@@ -43,6 +49,11 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        carregaReports()
     }
 
     /**
@@ -108,6 +119,35 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
             intent.putExtra("morada", address)
             startActivity(intent)
         }
+    }
+
+    private fun carregaReports(){
+        val request = ServiceBuilder.buildService(EndPoints::class.java)
+
+        val call = request.getReports()
+
+        call.enqueue(object : Callback<List<Report>> {
+
+            override fun onResponse(call: Call<List<Report>>, response: Response<List<Report>>) {
+                if (response.isSuccessful){
+                    var reports = response.body();
+
+                    reports?.forEach {
+                        val posicao = LatLng(it.latitude.toDouble(), it.longitude.toDouble())
+                        map.addMarker(
+                                MarkerOptions()
+                                        .position(posicao)
+                                        .title(it.titulo)
+                                        .snippet(it.tipo)
+                        )
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<Report>>, t: Throwable) {
+                Log.d("REPORTS" , "NAO CARREGADOS")
+            }
+        })
     }
 
 }

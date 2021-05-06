@@ -39,6 +39,8 @@ class ReportActivity : AppCompatActivity() {
     lateinit var username : String
     lateinit var id_user : String
 
+    lateinit var tipo : String
+
 
     var lat : String? = null
     var long: String? = null
@@ -77,16 +79,37 @@ class ReportActivity : AppCompatActivity() {
             if (checkPersmission()) takePicture() else requestPermission()
         })
 
+        val tipos = resources.getStringArray(R.array.tipo)
+        val spinner: Spinner = findViewById(R.id.spinner2)
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter.createFromResource(
+                this,
+                R.array.tipo,
+                android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            // Specify the layout to use when the list of choices appears
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            // Apply the adapter to the spinner
+            spinner.adapter = adapter
+        }
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(parent: AdapterView<*>,
+                                        view: View, position: Int, id: Long) {
+                tipo = tipos[position]
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // write code to perform some action
+            }
+        }
+
         val botaoReport = findViewById<Button>(R.id.reportar2)
         botaoReport.setOnClickListener {
             report()
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-
-    }
 
     @SuppressLint("MissingSuperCall")
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -176,7 +199,6 @@ class ReportActivity : AppCompatActivity() {
             val imgBitmap: Bitmap = findViewById<ImageView>(R.id.imageViewContent).drawable.toBitmap()
             val imageFile: File = convertBitmapToFile("file", imgBitmap)
 
-
             val imgFileRequest: RequestBody = RequestBody.create(MediaType.parse("image/*"), imageFile)
             val foto: MultipartBody.Part = MultipartBody.Part.createFormData("file", imageFile.name, imgFileRequest)
 
@@ -185,10 +207,12 @@ class ReportActivity : AppCompatActivity() {
             val descricao: RequestBody = RequestBody.create(MediaType.parse("text/plain"), descricao.text.toString())
             val latitude: RequestBody = RequestBody.create(MediaType.parse("text/plain"), lat)
             val longitude: RequestBody = RequestBody.create(MediaType.parse("text/plain"), long)
+            val tipo: RequestBody = RequestBody.create(MediaType.parse("text/plain"), tipo)
+
 
             val request = ServiceBuilder.buildService(EndPoints::class.java)
 
-            val call = request.report(foto, iduser, titulo, descricao, latitude, longitude)
+            val call = request.report(foto, iduser, titulo, descricao, latitude, longitude, tipo)
 
             call.enqueue(object : Callback<OutputPostReport> {
 
@@ -201,6 +225,7 @@ class ReportActivity : AppCompatActivity() {
 
                 override fun onFailure(call: Call<OutputPostReport>, t: Throwable) {
                     Toast.makeText(this@ReportActivity, "Erro", Toast.LENGTH_SHORT).show()
+                    Log.d("MACHAS", t.toString())
                 }
             })
         }else{
