@@ -1,16 +1,24 @@
 package com.example.inteligentecidade
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.widget.CheckBox
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.ViewModelProvider
 import com.example.inteligentecidade.api.EndPoints
 import com.example.inteligentecidade.api.Report
 import com.example.inteligentecidade.api.ServiceBuilder
+import com.example.inteligentecidade.viewModel.NotaViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -54,6 +62,34 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
     override fun onResume() {
         super.onResume()
         carregaReports()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.menumap, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle item selection
+        return when (item.itemId) {
+            R.id.logout -> {
+                val sharedPref : SharedPreferences = getSharedPreferences(getString(R.string.preference_key), Context.MODE_PRIVATE)
+                with(sharedPref.edit()){
+                    putBoolean(getString(R.string.check_login), false)
+                    putString(getString(R.string.user), null)
+                    putString(getString(R.string.pass), null)
+                    commit()
+                    val intent = Intent(this@MapActivity, MainActivity::class.java)
+                    startActivity(intent)
+                    finishAffinity()
+                }
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
+
     }
 
     /**
@@ -111,8 +147,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
                             .position(latLng)
             )
             val intent = Intent(this@MapActivity, ReportActivity::class.java)
-            intent.putExtra("id_user2", id_user)
-            intent.putExtra("username2", username)
             intent.putExtra("lat", latLng.latitude.toString())
             intent.putExtra("long", latLng.longitude.toString())
             val address = getAddress(latLng.latitude, latLng.longitude)

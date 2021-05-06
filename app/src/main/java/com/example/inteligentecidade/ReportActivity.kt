@@ -5,7 +5,9 @@ import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
@@ -29,6 +31,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.*
+import kotlin.math.log
 
 
 class ReportActivity : AppCompatActivity() {
@@ -36,8 +39,8 @@ class ReportActivity : AppCompatActivity() {
     lateinit var imageView: ImageView
     lateinit var captureButton: ImageView
 
-    lateinit var username : String
-    lateinit var id_user : String
+    var username : String? = null
+    var id_user : String? = null
 
     lateinit var tipo : String
 
@@ -58,11 +61,17 @@ class ReportActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_report)
 
+        val sharedPref : SharedPreferences = getSharedPreferences(getString(R.string.preference_key), Context.MODE_PRIVATE)
+
+        id_user = sharedPref.getString(getString(R.string.id_user), "default")
+
+        Log.d("SHARED_IDUSER", id_user.toString())
+
+
+
         lat = intent.getStringExtra("lat")
         long = intent.getStringExtra("long")
         morada = intent.getStringExtra("morada")
-        username = intent.getStringExtra("username2").toString()
-        id_user = intent.getStringExtra("id_user2").toString()
 
         var textlat = findViewById<TextView>(R.id.textViewLat)
         var textlong = findViewById<TextView>(R.id.textViewLong)

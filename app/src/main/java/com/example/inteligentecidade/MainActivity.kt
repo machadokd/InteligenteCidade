@@ -1,12 +1,15 @@
 package com.example.inteligentecidade
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 
 import android.view.View
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
 import com.example.inteligentecidade.api.EndPoints
@@ -21,6 +24,15 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val sharedPref : SharedPreferences = getSharedPreferences(getString(R.string.preference_key), Context.MODE_PRIVATE)
+        val check = sharedPref.getBoolean(getString(R.string.check_login), false)
+
+        if(check){
+            val intent = Intent(this@MainActivity, MapActivity::class.java)
+            startActivity(intent)
+            finishAffinity()
+        }
     }
 
     fun abrirNotas(view: View) {
@@ -42,14 +54,15 @@ class MainActivity : AppCompatActivity() {
             override fun onResponse(call: Call<OutputPostUser>, response: Response<OutputPostUser>) {
                 if (response.isSuccessful){
                     Toast.makeText(this@MainActivity, "Login Efetuado", Toast.LENGTH_SHORT).show()
-
+                    val checkBox = findViewById<CheckBox>(R.id.checkBox)
+                    val sharedPref : SharedPreferences = getSharedPreferences(getString(R.string.preference_key), Context.MODE_PRIVATE)
+                    with(sharedPref.edit()){
+                        putBoolean(getString(R.string.check_login), checkBox.isChecked)
+                        putString(getString(R.string.id_user), response.body()?.id_user.toString())
+                        commit()
+                    }
                     val intent = Intent(this@MainActivity, MapActivity::class.java)
-
-                    intent.putExtra("id_user", response.body()?.id_user)
-                    intent.putExtra("username", response.body()?.username)
-
                     startActivity(intent)
-
                     finishAffinity()
                 }
             }
@@ -59,4 +72,5 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
+
 }

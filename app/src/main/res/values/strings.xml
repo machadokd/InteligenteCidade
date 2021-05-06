@@ -1,4 +1,10 @@
 <resources>
+    <string name="preference_key">file</string>
+    <string name="check_login">check</string>
+    <string name="id_user">file</string>
+    <string name="user">file</string>
+    <string name="pass">file</string>
+
     <string name="app_name">InteligenteCidade</string>
     <string name="empty_not_saved">Não foi guardado</string>
     <string name="saved">Guardado com sucesso!</string>
