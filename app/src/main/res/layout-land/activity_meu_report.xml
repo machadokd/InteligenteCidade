@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MeuReport">
+
+<RelativeLayout
+    android:id="@+id/relativo"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <ImageView
+        android:id="@+id/imageViewMeuReport"
+        android:layout_width="146dp"
+        android:layout_height="185dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="145dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="60dp"
+        android:layout_toEndOf="@+id/tituloMeuReportEdit"
+        android:cropToPadding="true"
+        android:padding="8dp"
+        android:scaleType="centerCrop" />
+
+    <ImageView
+        android:id="@+id/tirarfotoMeuReport"
+        android:layout_width="62dp"
+        android:layout_height="49dp"
+        android:layout_below="@id/imageViewMeuReport"
+        android:layout_marginTop="-199dp"
+        android:src="@drawable/ic_camera" />
+
+    <TextView
+        android:id="@+id/tituloMeuReport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tirarfotoMeuReport"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/titulo" />
+
+    <EditText
+        android:id="@+id/tituloMeuReportEdit"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tituloMeuReport"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/descricaoMeuReport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tituloMeuReportEdit"
+        android:text="@string/descricao"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="20dp"/>
+
+    <EditText
+        android:id="@+id/descricaoMeuReportEdit"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/descricaoMeuReport"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="20dp"/>
+
+    <TextView
+        android:id="@+id/tipoMeuReport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/descricaoMeuReportEdit"
+        android:text="@string/tipo"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="20dp"/>
+
+    <Spinner
+        android:id="@+id/spinnerMeuReport"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tipoMeuReport"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="20dp"/>
+
+    <TextView
+        android:id="@+id/moradaMeuReport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="20dp"
+        android:text="@string/morada"
+        android:layout_below="@id/spinnerMeuReport"/>
+
+    <EditText
+        android:id="@+id/moradaMeuReportEdit"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/moradaMeuReport"
+        android:layout_marginTop="15dp"
+        android:editable="false"
+        android:layout_marginStart="20dp"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/moradaMeuReportEdit"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="-54dp"
+        android:layout_marginBottom="42dp"
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/updateReport"
+        android:layout_width="155dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageViewMeuReport"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="123dp"
+        android:layout_marginTop="166dp"
+        android:layout_marginEnd="73dp"
+        android:layout_marginBottom="371dp"
+        android:layout_toEndOf="@+id/moradaMeuReportEdit"
+        android:layout_weight="1"
+        android:onClick="update"
+        android:text="@string/atualizar" />
+</RelativeLayout>
+</ScrollView>

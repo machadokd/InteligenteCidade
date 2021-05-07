@@ -227,18 +227,18 @@ class ReportActivity : AppCompatActivity() {
 
                 override fun onResponse(call: Call<OutputPostReport>, response: Response<OutputPostReport>) {
                     if (response.isSuccessful){
-                        Toast.makeText(this@ReportActivity, "Report Efetuado com sucesso.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@ReportActivity, R.string.reportsuccess, Toast.LENGTH_SHORT).show()
                         finish()
                     }
                 }
 
                 override fun onFailure(call: Call<OutputPostReport>, t: Throwable) {
-                    Toast.makeText(this@ReportActivity, "Erro", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@ReportActivity, R.string.loginerro, Toast.LENGTH_SHORT).show()
                     Log.d("MACHAS", t.toString())
                 }
             })
         }else{
-            Toast.makeText(this@ReportActivity, "Não é possível ter campos vazios.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@ReportActivity, R.string.emptycampos, Toast.LENGTH_SHORT).show()
         }
     }
 }

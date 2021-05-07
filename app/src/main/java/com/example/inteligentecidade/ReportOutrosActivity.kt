@@ -51,7 +51,7 @@ class ReportOutrosActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<Report>, t: Throwable) {
-                Toast.makeText(this@ReportOutrosActivity, "Erro", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@ReportOutrosActivity, R.string.loginerro, Toast.LENGTH_SHORT).show()
                 Log.d("MACHAS", t.toString())
             }
         })

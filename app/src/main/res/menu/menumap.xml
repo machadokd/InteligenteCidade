@@ -3,7 +3,38 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/logout"
-        android:title="Logout"
+        android:title="@string/logout"
         app:showAsAction="never">
     </item>
+
+    <item
+        android:id="@+id/acidente"
+        android:title="@string/listacidente"
+        app:showAsAction="never">
+    </item>
+
+    <item
+        android:id="@+id/obras"
+        android:title="@string/listobras"
+        app:showAsAction="never">
+    </item>
+
+    <item
+        android:id="@+id/saneamento"
+        android:title="@string/listsaneamento"
+        app:showAsAction="never">
+    </item>
+
+    <item
+        android:id="@+id/outro"
+        android:title="@string/listooutros"
+        app:showAsAction="never">
+    </item>
+
+    <item
+        android:id="@+id/todos"
+        android:title="@string/listall"
+        app:showAsAction="never">
+    </item>
+
 </menu>

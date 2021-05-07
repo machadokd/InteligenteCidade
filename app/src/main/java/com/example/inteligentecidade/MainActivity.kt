@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun onResponse(call: Call<OutputPostUser>, response: Response<OutputPostUser>) {
                 if (response.isSuccessful){
-                    Toast.makeText(this@MainActivity, "Login Efetuado", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@MainActivity, R.string.loginefetuado, Toast.LENGTH_SHORT).show()
                     val checkBox = findViewById<CheckBox>(R.id.checkBox)
                     val sharedPref : SharedPreferences = getSharedPreferences(getString(R.string.preference_key), Context.MODE_PRIVATE)
                     with(sharedPref.edit()){
@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call:Call<OutputPostUser>, t: Throwable) {
-                Toast.makeText(this@MainActivity, "ERRO", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivity, R.string.loginerro, Toast.LENGTH_SHORT).show()
             }
         })
     }

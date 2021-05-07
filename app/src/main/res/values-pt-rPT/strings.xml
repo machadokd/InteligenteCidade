@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">InteligenteCidade</string>
+    <string name="empty_not_saved">Não foi guardado</string>
+    <string name="saved">Guardado com sucesso!</string>
+    <string name="nome_app">Cidade Inteligente</string>
+    <string name="sugestaoRegisto">Para registar clique aqui.</string>
+    <string name="notas">Notas</string>
+    <string name="ficar_logado">Ficar Logado</string>
+    <string name="titulo">Título</string>
+    <string name="descricao">Descrição</string>
+    <string name="tipo">Tipo</string>
+    <string name="guardar">Guardar</string>
+    <string name="atualizar">Atualizar</string>
+    <string name="morada">Morada</string>
+    <string name="reportar">Reportar</string>
+    <string name="listobras">Listar Obras</string>
+    <string name="listacidente">Listar Acidente</string>
+    <string name="listsaneamento">Listar Saneamento</string>
+    <string name="listooutros">Listar Outros</string>
+    <string name="listall">Listar Todos</string>
+    <string name="loginefetuado">Login Efetuado</string>
+    <string name="loginerro">Erro</string>
+    <string name="reportsuccess">Report Efetuado com sucesso.</string>
+    <string name="emptycampos">Não é possível ter campos vazios.</string>
+    <string name="updateReport">O report foi atualizado com sucesso.</string>
+    <string name="deleteReport">O report foi eliminado com sucesso.</string>
+</resources>

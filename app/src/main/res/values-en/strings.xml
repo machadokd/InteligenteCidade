@@ -11,4 +11,17 @@
     <string name="morada">Address</string>
     <string name="atualizar">Update</string>
     <string name="reportar">Report</string>
+    <string name="listobras">List Constructions</string>
+    <string name="listacidente">List Accident</string>
+    <string name="listsaneamento">List Sanitation</string>
+    <string name="listooutros">List Other</string>
+    <string name="listall">List All</string>
+    <string name="empty_not_saved">Not Saved</string>
+    <string name="saved">Saved</string>
+    <string name="loginefetuado">Logged in</string>
+    <string name="loginerro">Error</string>
+    <string name="reportsuccess">Report Done successfully.</string>
+    <string name="emptycampos">It is not possible to have empty fields.</string>
+    <string name="updateReport">The reporter has been successfully updated.</string>
+    <string name="deleteReport">Report was successfully eliminated.</string>
 </resources>

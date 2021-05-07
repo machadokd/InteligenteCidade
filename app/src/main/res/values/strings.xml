@@ -6,8 +6,8 @@
     <string name="pass" translatable="false">file</string>
 
     <string name="app_name" translatable="false">InteligenteCidade</string>
-    <string name="empty_not_saved" translatable="false">Não foi guardado</string>
-    <string name="saved" translatable="false">Guardado com sucesso!</string>
+    <string name="empty_not_saved">Não foi guardado</string>
+    <string name="saved">Guardado com sucesso!</string>
     <string name="title_activity_map" translatable="false">Map</string>
     <string name="title_activity_report" translatable="false">ReportActivity</string>
     <!-- Strings used for fragments for navigation -->
@@ -46,5 +46,17 @@
     <string name="longitude" translatable="false">Longitude:</string>
 
     <string name="reportar">Reportar</string>
+    <string name="logout" translatable="false">Logout</string>
+    <string name="listobras">Listar Obras</string>
+    <string name="listacidente">Listar Acidente</string>
+    <string name="listsaneamento">Listar Saneamento</string>
+    <string name="listooutros">Listar Outros</string>
+    <string name="listall">Listar Todos</string>
+    <string name="loginefetuado">Login Efetuado</string>
+    <string name="loginerro">Erro</string>
+    <string name="reportsuccess">Report Efetuado com sucesso.</string>
+    <string name="emptycampos">Não é possível ter campos vazios.</string>
+    <string name="updateReport">O report foi atualizado com sucesso.</string>
+    <string name="deleteReport">O report foi eliminado com sucesso.</string>
 
 </resources>

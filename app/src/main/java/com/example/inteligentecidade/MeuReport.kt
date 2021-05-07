@@ -130,7 +130,7 @@ class MeuReport : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<Report>, t: Throwable) {
-                Toast.makeText(this@MeuReport, "Erro", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MeuReport, R.string.loginerro, Toast.LENGTH_SHORT).show()
                 Log.d("MACHAS", t.toString())
             }
         })
@@ -149,7 +149,7 @@ class MeuReport : AppCompatActivity() {
                 return
             }
             else -> {
-                Toast.makeText(this, "Erro", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.loginerro, Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -200,13 +200,13 @@ class MeuReport : AppCompatActivity() {
 
                     override fun onResponse(call: Call<OutputDeleteReport>, response: Response<OutputDeleteReport>) {
                         if (response.isSuccessful){
-                            Toast.makeText(this@MeuReport, response.body()!!.MSG, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@MeuReport, R.string.deleteReport, Toast.LENGTH_SHORT).show()
                             finish()
                         }
                     }
 
                     override fun onFailure(call: Call<OutputDeleteReport>, t: Throwable) {
-                        Toast.makeText(this@MeuReport, "Erro", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@MeuReport, R.string.loginerro, Toast.LENGTH_SHORT).show()
                         Log.d("MACHAS", t.toString())
                     }
                 })
@@ -269,13 +269,13 @@ class MeuReport : AppCompatActivity() {
 
             override fun onResponse(call: Call<OutputUpdateReport>, response: Response<OutputUpdateReport>) {
                 if (response.isSuccessful){
-                    Toast.makeText(this@MeuReport, response.body()!!.MSG, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@MeuReport, R.string.updateReport, Toast.LENGTH_SHORT).show()
                     finish()
                 }
             }
 
             override fun onFailure(call: Call<OutputUpdateReport>, t: Throwable) {
-                Toast.makeText(this@MeuReport, "Erro", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MeuReport, R.string.loginerro, Toast.LENGTH_SHORT).show()
                 Log.d("MACHAS", t.toString())
             }
         })

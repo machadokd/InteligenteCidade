@@ -92,6 +92,26 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
                 }
                 true
             }
+            R.id.acidente -> {
+                carregaReportsList("Acidente")
+                true
+            }
+            R.id.obras -> {
+                carregaReportsList("Obras")
+                true
+            }
+            R.id.saneamento -> {
+                carregaReportsList("Saneamento")
+                true
+            }
+            R.id.outro -> {
+                carregaReportsList("Outro")
+                true
+            }
+            R.id.todos -> {
+                carregaReports()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
 
@@ -174,6 +194,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
     }
 
     private fun carregaReports(){
+        myMarkers.clear()
+        otherMarkers.clear()
         val request = ServiceBuilder.buildService(EndPoints::class.java)
 
         val call = request.getReports()
@@ -182,10 +204,10 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
 
             override fun onResponse(call: Call<List<Report>>, response: Response<List<Report>>) {
                 if (response.isSuccessful){
+                    map.clear()
                     var reports = response.body();
                     sharedPreferences = getSharedPreferences(getString(R.string.preference_key), Context.MODE_PRIVATE)
                     val id_user = sharedPreferences.getString(getString(R.string.id_user), "0")
-                    map.clear()
                     reports?.forEach {
                         if(it.id_user==id_user){
                             val posicao = LatLng(it.latitude.toDouble(), it.longitude.toDouble())
@@ -226,7 +248,68 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
         })
     }
 
-    private fun abreReportFab(lastLocation: Location){
+
+    private fun carregaReportsList(string: String){
+        map.clear()
+        myMarkers.clear()
+        otherMarkers.clear()
+        val request = ServiceBuilder.buildService(EndPoints::class.java)
+
+        val call = request.getReports()
+
+        call.enqueue(object : Callback<List<Report>> {
+
+            override fun onResponse(call: Call<List<Report>>, response: Response<List<Report>>) {
+                if (response.isSuccessful){
+                    var reports = response.body();
+                    sharedPreferences = getSharedPreferences(getString(R.string.preference_key), Context.MODE_PRIVATE)
+                    val id_user = sharedPreferences.getString(getString(R.string.id_user), "0")
+                    reports?.forEach {
+                        if (it.tipo == string){
+                            if(it.id_user==id_user){
+                                val posicao = LatLng(it.latitude.toDouble(), it.longitude.toDouble())
+                                var marker : Marker
+                                marker = map.addMarker(
+                                        MarkerOptions()
+                                                .position(posicao)
+                                                .title(it.titulo)
+                                                .snippet(it.tipo)
+                                                .icon(
+                                                        BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
+                                                )
+                                )
+                                marker.tag = it.id_report
+                                myMarkers.add(marker)
+                            }else{
+                                val posicao = LatLng(it.latitude.toDouble(), it.longitude.toDouble())
+                                var marker : Marker
+                                marker = map.addMarker(
+                                        MarkerOptions()
+                                                .position(posicao)
+                                                .title(it.titulo)
+                                                .snippet(it.tipo)
+                                                .icon(
+                                                        BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)
+                                                )
+                                )
+                                marker.tag = it.id_report
+                                otherMarkers.add(marker)
+                            }
+                        }
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<Report>>, t: Throwable) {
+                Log.d("REPORTS" , "NAO CARREGADOS")
+            }
+        })
+    }
+
+
+
+
+            private fun abreReportFab(lastLocation: Location){
         val intent = Intent(this@MapActivity, ReportActivity::class.java)
         intent.putExtra("lat", lastLocation.latitude.toString())
         intent.putExtra("long", lastLocation.longitude.toString())
