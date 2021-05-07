@@ -40,7 +40,6 @@ class ReportActivity : AppCompatActivity() {
     lateinit var imageView: ImageView
     lateinit var captureButton: ImageView
 
-    var username : String? = null
     var id_user : String? = null
 
     lateinit var tipo : String

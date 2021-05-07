@@ -1,23 +1,23 @@
 <resources>
-    <string name="preference_key">file</string>
-    <string name="check_login">check</string>
-    <string name="id_user">file</string>
-    <string name="user">file</string>
-    <string name="pass">file</string>
+    <string name="preference_key" translatable="false">file</string>
+    <string name="check_login" translatable="false">check</string>
+    <string name="id_user" translatable="false">file</string>
+    <string name="user" translatable="false">file</string>
+    <string name="pass" translatable="false">file</string>
 
-    <string name="app_name">InteligenteCidade</string>
-    <string name="empty_not_saved">Não foi guardado</string>
-    <string name="saved">Guardado com sucesso!</string>
-    <string name="title_activity_map">Map</string>
-    <string name="title_activity_report">ReportActivity</string>
+    <string name="app_name" translatable="false">InteligenteCidade</string>
+    <string name="empty_not_saved" translatable="false">Não foi guardado</string>
+    <string name="saved" translatable="false">Guardado com sucesso!</string>
+    <string name="title_activity_map" translatable="false">Map</string>
+    <string name="title_activity_report" translatable="false">ReportActivity</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
+    <string name="first_fragment_label" translatable="false">First Fragment</string>
+    <string name="second_fragment_label" translatable="false">Second Fragment</string>
+    <string name="next" translatable="false">Next</string>
+    <string name="previous" translatable="false">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="hello_first_fragment" translatable="false">Hello first fragment</string>
+    <string name="hello_second_fragment" translatable="false">Hello second fragment. Arg: %1$s</string>
 
     <string-array name="tipo">
         <item>Acidente</item>
@@ -25,4 +25,26 @@
         <item>Saneamento</item>
         <item>Outro</item>
     </string-array>
+
+    <string name="nome_app">Cidade Inteligente</string>
+    <string name="username" translatable="false">Username:</string>
+    <string name="password" translatable="false">Password:</string>
+    <string name="login" translatable="false">Login</string>
+    <string name="sugestaoRegisto">Para registar clique aqui.</string>
+    <string name="notas">Notas</string>
+    <string name="ficar_logado">Ficar Logado</string>
+
+    <string name="titulo">Título</string>
+    <string name="descricao">Descrição</string>
+    <string name="guardar">Guardar</string>
+
+    <string name="tipo">Tipo</string>
+    <string name="morada">Morada</string>
+    <string name="atualizar">Atualizar</string>
+
+    <string name="latitude" translatable="false">Latitude:</string>
+    <string name="longitude" translatable="false">Longitude:</string>
+
+    <string name="reportar">Reportar</string>
+
 </resources>

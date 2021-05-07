@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nome_app">Smart City</string>
+    <string name="sugestaoRegisto">To register click here.</string>
+    <string name="notas">Notes</string>
+    <string name="ficar_logado">Stay Logged In</string>
+    <string name="titulo">Title</string>
+    <string name="descricao">Description</string>
+    <string name="guardar">Save</string>
+    <string name="tipo">Type</string>
+    <string name="morada">Address</string>
+    <string name="atualizar">Update</string>
+    <string name="reportar">Report</string>
+</resources>

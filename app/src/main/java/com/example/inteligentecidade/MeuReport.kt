@@ -35,7 +35,9 @@ import java.io.*
 
 lateinit var tipo : String
 var id_report : String? = null
+@SuppressLint("StaticFieldLeak")
 lateinit var captureButton: ImageView
+@SuppressLint("StaticFieldLeak")
 lateinit var imageView: ImageView
 var image_uri: Uri? = null
 private var id : String? = null
@@ -108,7 +110,7 @@ class MeuReport : AppCompatActivity() {
                     findViewById<EditText>(R.id.descricaoMeuReportEdit).setText(report?.descrição)
                     val imageView : ImageView = findViewById(R.id.imageViewMeuReport)
                     Log.d("MACHAS", report?.fotografia.toString())
-                    val url = "http://192.168.73.3/meuslim/fotos_reports/"+ report?.fotografia
+                    val url = "https://cidadeinteligentecm.000webhostapp.com/meuslim/fotos_reports/"+ report?.fotografia
                     Picasso.get().load(url).into(imageView)
                     var spinner = findViewById<Spinner>(R.id.spinnerMeuReport)
                     val tipos = resources.getStringArray(R.array.tipo)

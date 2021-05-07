@@ -42,7 +42,7 @@ class ReportOutrosActivity : AppCompatActivity() {
                     findViewById<EditText>(R.id.descricaoReportOutrosEdit).setText(report?.descrição)
                     val imageView : ImageView = findViewById(R.id.imageViewReportOutros)
                     Log.d("MACHAS", report?.fotografia.toString())
-                    val url = "http://192.168.73.3/meuslim/fotos_reports/"+ report?.fotografia
+                    val url = "https://cidadeinteligentecm.000webhostapp.com/meuslim/fotos_reports/"+ report?.fotografia
                     Picasso.get().load(url).into(imageView)
                     findViewById<EditText>(R.id.tipoReportOutrosEdit).setText(report?.tipo)
                     val address = getAddress(report!!.latitude.toDouble(), report!!.longitude.toDouble())

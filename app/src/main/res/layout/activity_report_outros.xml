@@ -26,16 +26,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/imageViewReportOutros"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="8dp"
-            android:text="Titulo" />
+            android:text="@string/titulo" />
 
         <EditText
             android:id="@+id/tituloReportOutrosEdit"
             android:layout_width="360dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tituloReportOutros"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="15dp"
             android:textColor="@color/black" />
 
@@ -44,9 +44,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tituloReportOutrosEdit"
-            android:text="Descrição"
+            android:text="@string/descricao"
             android:layout_marginTop="15dp"
-            android:layout_marginLeft="20dp"/>
+            android:layout_marginStart="20dp"/>
 
         <EditText
             android:id="@+id/descricaoReportOutrosEdit"
@@ -54,16 +54,16 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/descricaoReportOutros"
             android:layout_marginTop="15dp"
-            android:layout_marginLeft="20dp"/>
+            android:layout_marginStart="20dp"/>
 
         <TextView
             android:id="@+id/tipoReportOutros"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/descricaoReportOutrosEdit"
-            android:text="Tipo"
+            android:text="@string/tipo"
             android:layout_marginTop="15dp"
-            android:layout_marginLeft="20dp"/>
+            android:layout_marginStart="20dp"/>
 
         <EditText
             android:id="@+id/tipoReportOutrosEdit"
@@ -71,15 +71,15 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tipoReportOutros"
             android:layout_marginTop="15dp"
-            android:layout_marginLeft="20dp"/>
+            android:layout_marginStart="20dp"/>
 
         <TextView
             android:id="@+id/moradaReportOutros"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:layout_marginLeft="20dp"
-            android:text="Morada"
+            android:layout_marginStart="20dp"
+            android:text="@string/morada"
             android:layout_below="@id/tipoReportOutrosEdit"/>
 
         <EditText
@@ -89,7 +89,7 @@
             android:layout_below="@+id/moradaReportOutros"
             android:layout_marginTop="15dp"
             android:editable="false"
-            android:layout_marginLeft="20dp"/>
+            android:layout_marginStart="20dp"/>
 
 
         <LinearLayout
