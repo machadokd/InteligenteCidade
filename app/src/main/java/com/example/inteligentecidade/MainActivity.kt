@@ -33,6 +33,18 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
             finishAffinity()
         }
+
+        val buttonSensorLuz = findViewById<Button>(R.id.sensorluz)
+        buttonSensorLuz.setOnClickListener {
+            val intent = Intent(this@MainActivity, SensorLuzActivity::class.java)
+            startActivity(intent)
+        }
+
+        val buttonSensorAccel = findViewById<Button>(R.id.sensoraccell)
+        buttonSensorAccel.setOnClickListener {
+            val intent2 = Intent(this@MainActivity, AccelometerActivity::class.java)
+            startActivity(intent2)
+        }
     }
 
     fun abrirNotas(view: View) {

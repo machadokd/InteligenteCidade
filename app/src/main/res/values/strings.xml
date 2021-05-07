@@ -58,5 +58,7 @@
     <string name="emptycampos">Não é possível ter campos vazios.</string>
     <string name="updateReport">O report foi atualizado com sucesso.</string>
     <string name="deleteReport">O report foi eliminado com sucesso.</string>
+    <string name="sensorluz">Sensor Luz</string>
+    <string name="sensoraccell">Sensor Accelometro</string>
 
 </resources>

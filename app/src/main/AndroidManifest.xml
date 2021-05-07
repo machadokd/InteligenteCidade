@@ -25,7 +25,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.InteligenteCidade"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ReportOutrosActivity"></activity>
+        <activity android:name=".AccelometerActivity"></activity>
+        <activity android:name=".SensorLuzActivity" />
+        <activity android:name=".ReportOutrosActivity" />
         <activity android:name=".MeuReport" />
 
         <provider
