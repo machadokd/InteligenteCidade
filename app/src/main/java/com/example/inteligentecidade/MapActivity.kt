@@ -10,12 +10,12 @@ import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
+import android.view.*
 import android.widget.CheckBox
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.inteligentecidade.api.EndPoints
 import com.example.inteligentecidade.api.Report
@@ -42,7 +42,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var lastLocation: Location
     lateinit var username : String
-    lateinit var password : String
     lateinit var id_user : String
     private lateinit var sharedPreferences: SharedPreferences
     lateinit var myMarkers: MutableList<Marker>
@@ -71,6 +70,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
         fab.setOnClickListener {
             abreReportFab(lastLocation)
         }
+
     }
 
     override fun onResume() {
@@ -122,7 +122,16 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
             onMarkerClick(marker)
             myMarkers.forEach{
                 if (marker.id == it.id){
-
+                    val intent = Intent(this@MapActivity, MeuReport::class.java)
+                    intent.putExtra("id_report", it.tag.toString())
+                    startActivity(intent)
+                }
+            }
+            otherMarkers.forEach{
+                if (marker.id == it.id){
+                    val intent = Intent(this@MapActivity, ReportOutrosActivity::class.java)
+                    intent.putExtra("id_report", it.tag.toString())
+                    startActivity(intent)
                 }
             }
         }
@@ -162,10 +171,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
 
     private fun setMapLongClick(map: GoogleMap) {
         map.setOnMapLongClickListener { latLng ->
-            map.addMarker(
-                    MarkerOptions()
-                            .position(latLng)
-            )
             val intent = Intent(this@MapActivity, ReportActivity::class.java)
             intent.putExtra("lat", latLng.latitude.toString())
             intent.putExtra("long", latLng.longitude.toString())
@@ -201,6 +206,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
                                                     BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
                                             )
                             )
+                            marker.tag = it.id_report
                             myMarkers.add(marker)
                         }else{
                             val posicao = LatLng(it.latitude.toDouble(), it.longitude.toDouble())
@@ -214,6 +220,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerC
                                                     BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)
                                             )
                             )
+                            marker.tag = it.id_report
                             otherMarkers.add(marker)
                         }
                     }
